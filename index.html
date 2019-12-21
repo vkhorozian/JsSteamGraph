@@ -1,0 +1,214 @@
+ <!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <div class="container">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <p id="jsonSample"></p>
+
+
+  <script>
+
+    /*
+    add the code for the steam api up here
+    - add something that can get the json via the html link
+    - then save it to a text variable
+    - then parse through it
+    - the we can choose
+
+   $.ajax({
+      url:'https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=0B847276B619EBB4E04DF9B5DCE287B0&steamid=76561198041761989&include_appinfo=1',
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader("Authorization", "")
+      }
+    })
+
+   $.getJSON('', function(data) {
+      console.log(data);
+    });
+
+
+    */
+
+
+
+    let url = 'https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=0B847276B619EBB4E04DF9B5DCE287B0&steamid=76561198041761989&include_appinfo=1';
+
+    fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+              console.log('Checkout this JSON! ', out);
+            })
+            .catch(err => { throw err });
+
+
+
+
+
+
+
+
+
+
+
+    let myChart = document.getElementById('myChart').getContext('2d');
+
+    // global options
+
+   // Chart.defaults.global.defaultFontFamily = 'Lato';
+   // Chart.defaults.defaultFontFamily = '26';
+   // Chart.defaults.defaultFontColor = '#777';
+
+    //we are going to make a new object for mychart
+
+    let massPopChart = new Chart(myChart, {
+      type:'bar', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+      data:{
+        labels:['Boston',"Worcester",'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
+        datasets:[{
+          label:'Population',
+          data:[
+                  617594,
+                  181045,
+                  153060,
+                  106519,
+                  105162,
+                  95072
+          ],
+          //backgroundColor:'green',
+          backgroundColor:[
+                  'aqua',
+                  'blue',
+                  'yellow',
+                  'orange',
+                  'pink',
+                  'purple'
+          ],
+          borderWidth:1,
+          borderColor:'#777',
+          hoverBorderWidth:'4',
+          hoverBorderColor:'black'
+        }]
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Varouj\'s Steam Games Hours',
+          fontSize:25,
+          //fontFamily:'Lato'
+        },
+        legend:{
+          //display:false,
+          position:'bottom',
+          labels:{
+            fontColor: 'orange'
+            }
+          },
+        layout:{
+          //padding:50 // this adds padding to all sides of it or we can make it into an object and call each side
+          padding:{
+            left:0,
+            right:0,
+            bottom:50,
+            top:50
+          }
+        },
+        tooltips:{
+          enabled:true
+        }
+        }
+
+    });
+
+
+    var json = `{
+    "book": {
+        "name": "Harry Potter and the Goblet of Fire",
+        "author": "J. K. Rowling",
+        "year": 2000,
+        "characters": ["Harry Potter", "Hermione Granger", "Ron Weasley"],
+        "genre": "Fantasy Fiction",
+        "price": {
+            "paperback": "$10.40", "hardcover": "$20.32", "kindle": "$4.11"
+        }
+    }
+}`;
+
+    // Converting JSON object to JS object
+    var obj = JSON.parse(json);
+
+    // Define recursive function to print nested values
+    function printValues(obj) {    //funciton is created right here and called below
+      for(var k in obj) {
+        if(obj[k] instanceof Object) {
+          printValues(obj[k]);
+        } else {
+          document.write(obj[k] + "<br>");
+        };
+      }
+    };
+
+    // Printing all the values from the resulting object
+    printValues(obj); // this is a function that is created up above
+
+    document.write("<hr>");
+
+    // Printing a single value
+    document.write(obj["book"]["author"] + "<br>");  // Prints: J. K. Rowling
+    document.write(obj["book"]["characters"][0] + "<br>");  // Prints: Harry Potter
+    document.write(obj["book"]["price"]["hardcover"]);  // Prints: $20.32
+
+
+
+
+
+  </script>
+
+
+  <!-- Add your site or application content here -->
+
+  <script src="js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set','transport','beacon'); ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+</body>
+
+</html>

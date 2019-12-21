@@ -1,0 +1,48 @@
+graph hours for steam games
+data needed:
+- game name
+- number of hours
+
+steam webapi:
+
+Domain Name: 76561198041761989
+Key: 0B847276B619EBB4E04DF9B5DCE287B0
+
+this is the url for my steam info
+                          ||
+I need to curl this below \/
+
+https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=0B847276B619EBB4E04DF9B5DCE287B0&steamid=76561198041761989&include_appinfo=1
+
+
+sample data
+[response][games][playtime_forever]
+{
+    "response": {
+        "game_count": 172,
+        "games": [
+            {
+                "appid": 617290,
+                "name": "Remnant: From the Ashes",
+                "playtime_forever": 3156,   // -- this is game time played in minutes we must divide by 60 to get hours and then modulus by 60 to get minutes
+                "img_icon_url": "0fec2d481028011910bf6fc35c61d19386695128",
+                "img_logo_url": "2c5e3ebf2588677b4cfc2cc3267eba440a1f5ad5",
+                "has_community_visible_stats": true,
+                "playtime_windows_forever": 3156,
+                "playtime_mac_forever": 0,
+                "playtime_linux_forever": 0
+            },
+            {
+              "appid": 356190,
+              "name": "Middle-earth™: Shadow of War™",
+              "playtime_forever": 977,
+              "img_icon_url": "316c479e5d51d21e15eb8f82338fce82c42c4115",
+              "img_logo_url": "5c8d36880cac09260240bc8931df20a7a19f3933",
+              "has_community_visible_stats": true,
+              "playtime_windows_forever": 0,
+              "playtime_mac_forever": 0,
+              "playtime_linux_forever": 0
+            } //,... comma and then the rest of the 172 GAMES ON THE LIST
+        ]
+    }
+}
